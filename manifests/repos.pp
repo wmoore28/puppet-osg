@@ -50,7 +50,9 @@ class osg::repos {
     }
   }
 
-  ensure_packages(['yum-plugin-priorities'])
+  if $::operatingsystemmajrelease < '8' {
+    ensure_packages(['yum-plugin-priorities'])
+  }
 
   Yumrepo {
     failovermethod  => 'priority',
