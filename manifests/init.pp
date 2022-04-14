@@ -118,10 +118,10 @@ class osg (
 
   $osfamily = $facts.dig('os', 'family')
   $osmajor = $facts.dig('os', 'release', 'major')
-  $supported = ['RedHat-7']
+  $supported = ['RedHat-7','RedHat-8']
   $os = "${osfamily}-${osmajor}"
   if ! ($os in $supported) {
-    fail("Unsupported OS: ${osfamily}, module ${module_name} only supports RedHat 7")
+    fail("Unsupported OS: ${osfamily}, module ${module_name} only supports RedHat 7,8")
   }
 
   $repo_development_baseurl_bit_real  = pick($repo_development_baseurl_bit, $repo_baseurl_bit)
