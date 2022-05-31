@@ -76,7 +76,7 @@
 #   Purge unmanaged osg_gip_config
 #
 class osg (
-  Enum['3.5'] $osg_release = '3.5',
+  Enum['3.5','3.6'] $osg_release = '3.5',
   Optional[String] $repo_baseurl_bit = 'https://repo.opensciencegrid.org',
   Optional[String] $repo_development_baseurl_bit = undef,
   Optional[String] $repo_testing_baseurl_bit = undef,
