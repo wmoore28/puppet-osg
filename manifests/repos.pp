@@ -55,7 +55,6 @@ class osg::repos {
   }
 
   Yumrepo {
-    failovermethod  => 'priority',
     gpgcheck        => '1',
     gpgkey          => $osg::_repo_gpgkey,
     priority        => '98',
