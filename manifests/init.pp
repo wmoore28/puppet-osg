@@ -76,7 +76,7 @@
 #   Purge unmanaged osg_gip_config
 #
 class osg (
-  Enum['3.5','3.6'] $osg_release = '3.5',
+  Enum['3.5','3.6'] $osg_release = '3.6',
   Optional[String] $repo_baseurl_bit = 'https://repo.opensciencegrid.org',
   Optional[String] $repo_development_baseurl_bit = undef,
   Optional[String] $repo_testing_baseurl_bit = undef,
@@ -118,10 +118,10 @@ class osg (
 
   $osfamily = $facts.dig('os', 'family')
   $osmajor = $facts.dig('os', 'release', 'major')
-  $supported = ['RedHat-7','RedHat-8']
+  $supported = ['RedHat-7','RedHat-8', 'RedHat-9']
   $os = "${osfamily}-${osmajor}"
   if ! ($os in $supported) {
-    fail("Unsupported OS: ${osfamily}, module ${module_name} only supports RedHat 7,8")
+    fail("Unsupported OS: ${osfamily}, module ${module_name} only supports RedHat 7,8,9")
   }
 
   $repo_development_baseurl_bit_real  = pick($repo_development_baseurl_bit, $repo_baseurl_bit)
