@@ -98,30 +98,43 @@ class osg::fetchcrl (
     require => Yumrepo['osg'],
   }
 
-  file { '/etc/fetch-crl.d/syslog.conf':
-    ensure  => $syslog_conf_ensure,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => template('osg/fetchcrl/syslog.conf.erb'),
-    require => Package['fetch-crl'],
-  }
+  if $::facts['os']['family'] == 'RedHat' {
+    if versioncmp($::facts['os']['release']['major'], '7') == 0 {
+      file { '/etc/fetch-crl.d/syslog.conf':
+        ensure  => $syslog_conf_ensure,
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0644',
+        content => template('osg/fetchcrl/syslog.conf.erb'),
+        require => Package['fetch-crl'],
+      }
 
-  service { 'fetch-crl-boot':
-    ensure     => $crl_boot_service_ensure_real,
-    enable     => $crl_boot_service_enable_real,
-    name       => $crl_boot_service_name,
-    hasstatus  => true,
-    hasrestart => true,
-    require    => Package['fetch-crl'],
-  }
+      service { 'fetch-crl-boot':
+        ensure     => $crl_boot_service_ensure_real,
+        enable     => $crl_boot_service_enable_real,
+        name       => $crl_boot_service_name,
+        hasstatus  => true,
+        hasrestart => true,
+        require    => Package['fetch-crl'],
+      }
 
-  service { 'fetch-crl-cron':
-    ensure     => $crl_cron_service_ensure_real,
-    enable     => $crl_cron_service_enable_real,
-    name       => $crl_cron_service_name,
-    hasstatus  => true,
-    hasrestart => true,
-    require    => Package['fetch-crl'],
+      service { 'fetch-crl-cron':
+        ensure     => $crl_cron_service_ensure_real,
+        enable     => $crl_cron_service_enable_real,
+        name       => $crl_cron_service_name,
+        hasstatus  => true,
+        hasrestart => true,
+        require    => Package['fetch-crl'],
+      }
+    } else {
+      # EL8+
+      service { 'fetch-crl.timer':
+        ensure     => $crl_cron_service_ensure_real,
+        enable     => $crl_cron_service_enable_real,
+        hasstatus  => true,
+        hasrestart => true,
+        require    => Package['fetch-crl'],
+      }
+    }
   }
 }
