@@ -86,6 +86,7 @@ class osg (
   Boolean $enable_osg = true,
   Boolean $enable_osg_empty = true,
   Boolean $enable_osg_contrib = false,
+  Boolean $enable_osg_upcoming = true,
   Boolean $manage_epel = true,
   Enum['lcmaps_voms'] $auth_type = 'lcmaps_voms',
   Enum['osg-ca-certs', 'igtf-ca-certs', 'empty-ca-certs'] $cacerts_package_name = 'osg-ca-certs',

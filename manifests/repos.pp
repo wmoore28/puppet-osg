@@ -100,7 +100,7 @@ class osg::repos {
     baseurl    => $baseurls['osg-upcoming'],
     mirrorlist => $mirrorlists['osg-upcoming'],
     descr      => "OSG Software for Enterprise Linux ${::operatingsystemmajrelease} - Upcoming - ${::architecture}",
-    enabled    => '1',
+    enabled    => bool2num($osg::enable_osg_upcoming),
   }
 
   yumrepo { 'osg-upcoming-development':
