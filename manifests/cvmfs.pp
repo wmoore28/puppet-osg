@@ -82,7 +82,7 @@ class osg::cvmfs (
   if $repositories {
     $repositories_real = join($repositories, ',')
   } else {
-    $repositories_real = '`echo $((echo oasis.opensciencegrid.org;echo cms.cern.ch;ls /cvmfs)|sort -u)|tr \' \' ,`'
+    $repositories_real = '`echo $((echo oasis.opensciencegrid.org;echo cms.cern.ch;ls /cvmfs)|sort -u|paste -sd ,)`'
   }
 
   include ::autofs
