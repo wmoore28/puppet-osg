@@ -11,7 +11,7 @@ class osg::cvmfs::config {
     mode    => '0644',
   }
 
-  if versioncmp($::operatingsystemrelease, '7.0') < 0 {
+  if versioncmp($facts['os']['release']['major'], '7.0') < 0 {
     file { '/bin/fusermount':
       mode => '4755',
     }
