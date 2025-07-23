@@ -2,7 +2,7 @@
 # @api private
 class osg::cvmfs::user {
 
-  if $osg::cvmfs::manage_fuse_group and versioncmp($::operatingsystemrelease, '7.0') < 0 {
+  if $osg::cvmfs::manage_fuse_group and versioncmp($facts['os']['release']['major'], '7.0') < 0 {
     if $osg::cvmfs::manage_user {
       $_fuse_group_before = User['cvmfs']
     } else {
@@ -19,7 +19,7 @@ class osg::cvmfs::user {
   }
 
   if $osg::cvmfs::manage_user {
-    if versioncmp($::operatingsystemrelease, '7.0') < 0 {
+    if versioncmp($facts['os']['release']['major'], '7.0') < 0 {
       $cvmfs_groups = ['fuse']
     } else {
       $cvmfs_groups = undef
