@@ -1,5 +1,7 @@
 # @summary Class for common OSG parameters and common resources
 #
+# @param manage_repos
+#   Install/configure OSG repos
 # @param osg_release
 #   OSG release
 # @param repo_baseurl_bit
@@ -76,6 +78,7 @@
 #   Purge unmanaged osg_gip_config
 #
 class osg (
+  Boolean $manage_repos = true,
   Enum['3.5','3.6'] $osg_release = '3.6',
   Optional[String] $repo_baseurl_bit = 'https://repo.opensciencegrid.org',
   Optional[String] $repo_development_baseurl_bit = undef,
@@ -133,7 +136,9 @@ class osg (
   if $manage_epel {
     contain ::epel
   }
-  contain osg::repos
+  if $manage_repos {
+    contain osg::repos
+  }
 
   include osg::configure
 
