@@ -61,7 +61,7 @@
 #
 class osg (
   Boolean $manage_repos = true,
-  Enum['23','24'] $osg_release = '3.6',
+  Enum['23','24'] $osg_release = '24',
   Boolean $manage_epel = true,
   Enum['lcmaps_voms'] $auth_type = 'lcmaps_voms',
   Enum['osg-ca-certs', 'igtf-ca-certs', 'empty-ca-certs'] $cacerts_package_name = 'osg-ca-certs',
