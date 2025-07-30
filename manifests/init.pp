@@ -4,24 +4,6 @@
 #   Install/configure OSG repos
 # @param osg_release
 #   OSG release
-# @param repo_baseurl_bit
-#   Base URL for osg repo, eg: `https://repo.opensciencegrid.org`
-# @param repo_development_baseurl_bit
-#   Base URL for osg-development repo, default: `https://repo.opensciencegrid.org`
-# @param repo_testing_baseurl_bit
-#   Base URL for osg-testubg repo, default: `https://repo.opensciencegrid.org`
-# @param repo_upcoming_baseurl_bit
-#   Base URL for osg-upcoming repo, default: `https://repo.opensciencegrid.org`
-# @param repo_use_mirrors
-#   Sets if repos should use mirrors
-# @param repo_gpgkey
-#   Path to repo GPG key
-# @param enable_osg
-#   Enable the osg repo
-# @param enable_osg_empty
-#   Enable the osg-empty repo
-# @param enable_osg_contrib
-#   Enable the osg-contrib repo
 # @param manage_epel
 #   Manage the EPEL repo
 # @param auth_type
@@ -79,17 +61,7 @@
 #
 class osg (
   Boolean $manage_repos = true,
-  Enum['3.5','3.6'] $osg_release = '3.6',
-  Optional[String] $repo_baseurl_bit = 'https://repo.opensciencegrid.org',
-  Optional[String] $repo_development_baseurl_bit = undef,
-  Optional[String] $repo_testing_baseurl_bit = undef,
-  Optional[String] $repo_upcoming_baseurl_bit = undef,
-  Boolean $repo_use_mirrors = true,
-  Optional[String] $repo_gpgkey = undef,
-  Boolean $enable_osg = true,
-  Boolean $enable_osg_empty = true,
-  Boolean $enable_osg_contrib = false,
-  Boolean $enable_osg_upcoming = true,
+  Enum['23','24'] $osg_release = '3.6',
   Boolean $manage_epel = true,
   Enum['lcmaps_voms'] $auth_type = 'lcmaps_voms',
   Enum['osg-ca-certs', 'igtf-ca-certs', 'empty-ca-certs'] $cacerts_package_name = 'osg-ca-certs',
@@ -127,11 +99,6 @@ class osg (
   if ! ($os in $supported) {
     fail("Unsupported OS: ${osfamily}, module ${module_name} only supports RedHat 7,8,9")
   }
-
-  $repo_development_baseurl_bit_real  = pick($repo_development_baseurl_bit, $repo_baseurl_bit)
-  $repo_testing_baseurl_bit_real      = pick($repo_testing_baseurl_bit, $repo_baseurl_bit)
-  $repo_upcoming_baseurl_bit_real     = pick($repo_upcoming_baseurl_bit, $repo_baseurl_bit)
-  $_repo_gpgkey                       = pick($repo_gpgkey, 'https://repo.opensciencegrid.org/osg/RPM-GPG-KEY-OSG')
 
   if $manage_epel {
     contain ::epel
